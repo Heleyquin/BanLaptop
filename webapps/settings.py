@@ -17,7 +17,7 @@ SECRET_KEY = env('SECRET_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-if ENVIRONMENT == 'development':
+if ENVIRONMENT == 'production':
     DEBUG = True
 else:
     DEBUG = False
@@ -92,7 +92,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3'
     }
 }
-POSGREST_LOCALLY=True
+POSGREST_LOCALLY=False
 if ENVIRONMENT=='production' or POSGREST_LOCALLY == True:
     DATABASES['default'] = dj_database_url.parse(env('DATABASE_URL'))
 
