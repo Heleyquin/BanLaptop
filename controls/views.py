@@ -314,30 +314,29 @@ def create_specification(request: HttpRequest):
 @user_passes_test(test_func=check_staff_permission, login_url='signin')
 @atomic
 def create_product(request: HttpRequest):
-    pass
-    # specifications = models.Specification.objects.all()
-    # manufacturers = models.Manufacturer.objects.all()
-    # form = forms.ModelForm()
+    specifications = models.Specification.objects.all()
+    manufacturers = models.Manufacturer.objects.all()
+    form = forms.ModelForm()
 
-    # if request.method == 'POST':
-    #     form = forms.ModelForm(request.POST, request.FILES)
-    #     if form.is_valid():
-    #         instance = form.save(commit=False)
-    #         # MANUFACTURER.
-    #         manufacturer, _ = models.Manufacturer.objects.get_or_create(name=request.POST.get('manufacturer'))
-    #         instance.manufacturer = manufacturer
-    #         # SPECIFICATION.
-    #         specification = specifications.get(pk=request.POST.get('specification'))
-    #         instance.specification = specification
-    #         # CATEGORY.
-    #         category = models.Category.objects.get(name=make_predict(instance))
-    #         instance.category = category
-    #         instance.save()
-    #         return redirect('controls:product')
+    if request.method == 'POST':
+        form = forms.ModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            # MANUFACTURER.
+            manufacturer, _ = models.Manufacturer.objects.get_or_create(name=request.POST.get('manufacturer'))
+            instance.manufacturer = manufacturer
+            # SPECIFICATION.
+            specification = specifications.get(pk=request.POST.get('specification'))
+            instance.specification = specification
+            # CATEGORY.
+            category = models.Category.objects.get_or_create(name="Văn phòng")
+            instance.category = category
+            instance.save()
+            return redirect('controls:product')
 
-    # context = {'section': 1, 'form': form, 'action': True, 'task': 0,
-    #            'manufactures': manufacturers, 'specifications': specifications}
-    # return render(request, 'controls/dashboard.html', context)
+    context = {'section': 1, 'form': form, 'action': True, 'task': 0,
+               'manufactures': manufacturers, 'specifications': specifications}
+    return render(request, 'controls/dashboard.html', context)
 
 
 @user_passes_test(test_func=check_staff_permission, login_url='signin')
