@@ -329,7 +329,7 @@ def create_product(request: HttpRequest):
             specification = specifications.get(pk=request.POST.get('specification'))
             instance.specification = specification
             # CATEGORY.
-            category = models.Category.objects.get_or_create(name="Văn phòng")
+            category = models.Category.objects.get(name="Văn phòng")
             instance.category = category
             instance.save()
             return redirect('controls:product')
