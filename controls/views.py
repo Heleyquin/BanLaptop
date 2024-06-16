@@ -326,7 +326,7 @@ def create_product(request: HttpRequest):
             manufacturer, _ = models.Manufacturer.objects.get_or_create(name=request.POST.get('manufacturer'))
             instance.manufacturer = manufacturer
             # SPECIFICATION.
-            specification = specifications.get(pk=request.POST.get('specification'))
+            specification,_ = specifications.get_or_create(pk=request.POST.get('specification'))
             instance.specification = specification
             # CATEGORY.
             category,_ = models.Category.objects.get_or_create(name="Văn phòng")
@@ -342,32 +342,31 @@ def create_product(request: HttpRequest):
 @user_passes_test(test_func=check_staff_permission, login_url='signin')
 @atomic
 def update_product(request: HttpRequest, pk: int):
-    pass
-    # manufacturers = models.Manufacturer.objects.all()
-    # result = get_object_or_404(models.LaptopModel, pk=pk)
-    # specifications = models.Specification.objects.exclude(pk=pk)
-    # form = forms.ModelForm(instance=result)
+    manufacturers = models.Manufacturer.objects.all()
+    result = get_object_or_404(models.LaptopModel, pk=pk)
+    specifications = models.Specification.objects.exclude(pk=pk)
+    form = forms.ModelForm(instance=result)
 
-    # if request.method == 'POST':
-    #     form = forms.ModelForm(request.POST, request.FILES, instance=result)
-    #     if form.is_valid():
-    #         instance = form.save(commit=False)
-    #         # MANUFACTURER.
-    #         manufacturer, _ = models.Manufacturer.objects.get_or_create(name=request.POST.get('manufacturer'))
-    #         instance.manufacturer = manufacturer
-    #         # SPECIFICATION.
-    #         specification = models.Specification.objects.get(pk=request.POST.get('specification'))
-    #         instance.specification = specification
-    #         # CATEGORY.
-    #         category = models.Category.objects.get(name=make_predict(instance))
-    #         instance.category = category
-    #         instance.save()
-    #         return redirect('controls:product')
+    if request.method == 'POST':
+        form = forms.ModelForm(request.POST, request.FILES, instance=result)
+        if form.is_valid():
+            instance = form.save(commit=False)
+            # MANUFACTURER.
+            manufacturer, _ = models.Manufacturer.objects.get_or_create(name=request.POST.get('manufacturer'))
+            instance.manufacturer = manufacturer
+            # SPECIFICATION.
+            specification = models.Specification.objects.get(pk=request.POST.get('specification'))
+            instance.specification = specification
+            # CATEGORY.
+            category = models.Category.objects.get("Văn phòng")
+            instance.category = category
+            instance.save()
+            return redirect('controls:product')
 
-    # context = {'section': 1, 'form': form, 'action': True, 'task': 0,
-    #            'manufactures': manufacturers, 'manufacturer': result.manufacturer,
-    #            'specifications': specifications, 'main': result.specification}
-    # return render(request, 'controls/dashboard.html', context)
+    context = {'section': 1, 'form': form, 'action': True, 'task': 0,
+               'manufactures': manufacturers, 'manufacturer': result.manufacturer,
+               'specifications': specifications, 'main': result.specification}
+    return render(request, 'controls/dashboard.html', context)
 
 
 @user_passes_test(test_func=check_staff_permission, login_url='signin')
