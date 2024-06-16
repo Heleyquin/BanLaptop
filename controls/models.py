@@ -24,7 +24,7 @@ class Specification(models.Model):
 
 
 class Manufacturer(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=150, unique=True)
     specifications = models.ManyToManyField(
         Specification, related_name='manufacturers',
         through="LaptopModel", through_fields=('manufacturer', 'specification'))
@@ -34,7 +34,7 @@ class Manufacturer(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=150, unique=True)
 
     def __str__(self) -> str:
         return self.name
@@ -43,7 +43,7 @@ class Category(models.Model):
 class LaptopModel(models.Model):
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.PROTECT)
     specification = models.ForeignKey(Specification, on_delete=models.PROTECT)
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=150)
     image = models.ImageField(upload_to='products/', default='img/default.jpg')
     quantity = models.IntegerField(default=0)
     price = models.DecimalField(max_digits=15, decimal_places=2)
@@ -74,7 +74,7 @@ class CartDetails(models.Model):
 
 
 class Supplier(models.Model):
-    name = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=150, unique=True)
     address = models.TextField(null=True, blank=True)
     email = models.EmailField(null=True, blank=True)
     phone = models.CharField(max_length=25, null=True, blank=True)
