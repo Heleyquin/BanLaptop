@@ -2,7 +2,7 @@ name: BanLaptop Testing
 
 on:
   pull_request:
-    brnaches:
+    branches:
     - staging
 jobs:
   build:
