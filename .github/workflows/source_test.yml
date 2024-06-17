@@ -2,7 +2,7 @@ name: BanLaptop Testing
 
 on:
   pull_request:
-    brnaches:
+    branches:
     - staging
 jobs:
   build:
@@ -13,12 +13,12 @@ jobs:
       SECRET_KEY: secret_key
     
     steps:
-      - uses: actions/checkeout@v4
+      - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
         with:
           python-version: 3.12.4
 
-      - run: python -m pip install --upgrade
+      - run: python -m pip install --upgrade pip
       - run: pip install -r requirements.txt
       - run: python manage.py test
