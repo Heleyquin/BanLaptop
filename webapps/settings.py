@@ -8,10 +8,6 @@ env = Env()
 Env.read_env()
 ENVIRONMENT = env('ENVIRONMENT', default='production')
 
-#Feature toggle
-DEVELOPER = env('DEVELOPER', default='')
-STAGING = env('STAGING', default=False)
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -49,8 +45,7 @@ INSTALLED_APPS = [
     'orders.apps.OrdersConfig',
     'controls.apps.ControlsConfig',
     # THIRD-PARTY APPS.
-    'fontawesomefree',
-    'features'
+    'fontawesomefree'
 ]
 
 MIDDLEWARE = [
