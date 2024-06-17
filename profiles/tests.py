@@ -14,4 +14,4 @@ class TestSignIn(TestCase):
             'password2': 'matkhau123'
         }
         response = self.client.post(reverse('signup'), user, format='text/html')
-        self.assertTemplateUsed(response, 'signin.html')
+        self.assertTemplateUsed(response, 'email/verification.html')
